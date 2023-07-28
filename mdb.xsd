@@ -126,7 +126,7 @@
 	
 	<xsd:complexType name="corpusLuteumType">
 			<!-- NO CONTENT MODEL FOR AN EMPTY ELEMENT -->
-			<xsd:attribute name="value" type="corpusLuteumValues" use="required" />
+			<xsd:attribute name="value" type="corpusLuteumValues" use="optional" />
 	</xsd:complexType>
 	
 
