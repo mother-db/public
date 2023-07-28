@@ -2,10 +2,12 @@
 			xmlns="http://mother-db.org/mdb" 
 			targetNamespace="http://mother-db.org/mdb"
 			elementFormDefault="qualified">
+
+	<!-- Version 1.1 -->
 	
 	<xsd:element name="mother" type="motherType"/>
 	<xsd:element name="donorID" type="xsd:string" />
-	<xsd:element name="donorGender" type="donorGenderType" />
+	<xsd:element name="donorSex" type="donorSexType" />
 	<xsd:element name="donorAge" type="donorAgeType" nillable="true"/>
 	<xsd:element name="donorYears" type="xsd:nonNegativeInteger" />
 	<xsd:element name="donorDays" type="xsd:nonNegativeInteger" nillable="true"/>
@@ -30,7 +32,7 @@
 	<xsd:complexType name="motherType">
 		<xsd:sequence>
 			<xsd:element ref="donorID"/>
-			<xsd:element ref="donorGender" />
+			<xsd:element ref="donorSex" />
 			<xsd:element ref="donorAge" />
 			<xsd:element ref="donorLifeStage" />
 			<xsd:element ref="specimenSeqNum" />
@@ -50,13 +52,12 @@
 	
 	<xsd:complexType name="emptyElementType" />
 	
-	<xsd:simpleType name="donorGenderType">
+	<xsd:simpleType name="donorSexType">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="female" />
 		</xsd:restriction>
 	</xsd:simpleType>
 	
-<!-- Need to ask specifics on minimum to require? --> 
 	<xsd:complexType name="donorAgeType">
 		<xsd:sequence>
 			<xsd:element ref="donorYears" minOccurs="0" />
@@ -72,6 +73,7 @@
 			<xsd:enumeration value="pubertal" />
 			<xsd:enumeration value="adult" />
 			<xsd:enumeration value="aging" />
+			<xsd:enumeration value="unspecified" />		
 		</xsd:restriction>
 	</xsd:simpleType>
 	
@@ -81,7 +83,6 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	
-	<!-- Left or Right ovary -->
 	<xsd:simpleType name="ovaryPositionType">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="left" />
@@ -90,7 +91,6 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	
-	<!-- Location -->
 
 	<xsd:complexType name="locationType">
 		<xsd:sequence>
@@ -129,7 +129,7 @@
 			<xsd:attribute name="value" type="corpusLuteumValues" use="required" />
 	</xsd:complexType>
 	
-	<!-- Stage of Ovarian Cycle -->
+
 	
 	<xsd:complexType name="cycleType">
 		<xsd:sequence>
@@ -170,7 +170,7 @@
 	
 	<xsd:complexType name="follicularType">
 			<!-- NO CONTENT MODEL FOR AN EMPTY ELEMENT -->
-			<xsd:attribute name="value" type="follicularValues" use="required" />
+			<xsd:attribute name="value" type="follicularValues" use="optional" />
 	</xsd:complexType>
 	
 	<xsd:simpleType name="lutealValues">
@@ -184,7 +184,7 @@
 	
 	<xsd:complexType name="lutealType">
 			<!-- NO CONTENT MODEL FOR AN EMPTY ELEMENT -->
-			<xsd:attribute name="value" type="lutealValues" use="required" />
+			<xsd:attribute name="value" type="lutealValues" use="optional" />
 	</xsd:complexType>
 	
 	<xsd:complexType name="estrousStageType">
@@ -201,8 +201,17 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	
+	<xsd:complexType name="otherStageType">
+		<xsd:complexContent>
+			<xsd:extension base="stageType">
+				<xsd:sequence>
+					<xsd:element name="stage" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-<!-- Section Thickness --> 
 
 	<xsd:complexType name="sectionThicknessType">
 		<xsd:sequence>
@@ -218,8 +227,6 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	
-	
-<!-- Sample Processing --> 
 
 	<xsd:complexType name="sampleProcessingType">
 		<xsd:sequence>
@@ -312,8 +319,7 @@
 		</xsd:choice>
 	</xsd:complexType>
 	
-	<!-- Note: Since this can be an actual magnification, it must be a general value. 
-	           We can have a drop-down to choose a common value. -->
+
 	<xsd:complexType name="magnificationType">
 		<xsd:attribute name="value" type="xsd:string" use="required" />
 	</xsd:complexType>
