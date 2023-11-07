@@ -3,7 +3,7 @@
 			targetNamespace="http://mother-db.org/mdb"
 			elementFormDefault="qualified">
 
-	<!-- Version 1.1 -->
+	<!-- Version 1.2: Added experimentalTreatment and otherPathology -->
 	
 	<xsd:element name="mother" type="motherType"/>
 	<xsd:element name="donorID" type="xsd:string" />
@@ -20,6 +20,8 @@
 	<xsd:element name="dayOfCycle" type="xsd:nonNegativeInteger" nillable="true" />
 	<xsd:element name="stageOfCycle" type="stageType" />
 	<xsd:element name="slideID" type="xsd:string" />
+	<xsd:element name="experimentalTreatment" type="experimentalTreatmentType" />
+	<xsd:element name="otherPathology" type="xsd:string" />
 	<xsd:element name="sectionSeqNum" type="xsd:nonNegativeInteger" />
 	<xsd:element name="sectionThickness" type="sectionThicknessType" />
 	<xsd:element name="sampleProcessing" type="sampleProcessingType" />
@@ -41,6 +43,8 @@
 			<xsd:element ref="specimenLocation" />
 			<xsd:element ref="specimenCycle" />
 			<xsd:element ref="slideID" />
+			<xsd:element ref="experimentalTreatment" />
+			<xsd:element ref="otherPathology" minOccurs="0" />
 			<xsd:element ref="sectionSeqNum" minOccurs="0"/>
 			<xsd:element ref="sectionThickness" />
 			<xsd:element ref="sampleProcessing" />
@@ -212,6 +216,15 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
+	<!-- string is compound-dose-route-duration field for treatment or controlMockTreatment -->
+	<xsd:complexType name="experimentalTreatmentType">
+		<xsd:choice>
+			<xsd:element name="noTreatment" type="emptyElementType"/>
+			<xsd:element name="controlMockTreatment" type="xsd:string"/>
+			<xsd:element name="controlNoTreatment" type="emptyElementType"/>
+			<xsd:element name="treatment" type="xsd:string"/>
+		</xsd:choice>
+	</xsd:complexType>
 
 	<xsd:complexType name="sectionThicknessType">
 		<xsd:sequence>
